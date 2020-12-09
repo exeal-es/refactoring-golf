@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Hole1
+namespace Hole2
 {
     public class TakeHomeCalculator {
 
@@ -19,7 +19,7 @@ namespace Hole1
             Pair<int, String> total = first;
 
             foreach (Pair<int, String> next in pairs) {
-                if (next.second != total.second) {
+                if (!next.second.Equals(total.second)) {
                     throw new Incalculable();
                 }
             }
@@ -31,11 +31,10 @@ namespace Hole1
             Double amount = total.first * (percent / 100d);
             Pair<int, String> tax = new Pair<int, String>(Convert.ToInt32(amount), first.second);
 
-            if (total.second == tax.second) {
-                return new Pair<int, String>(total.first - tax.first, first.second);
-            } else {
+            if (!total.second.Equals(tax.second)) {
                 throw new Incalculable();
             }
+            return new Pair<int, String>(total.first - tax.first, first.second);
         }
 
         public class Pair<A, B> {

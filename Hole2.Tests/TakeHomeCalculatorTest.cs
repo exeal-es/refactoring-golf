@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace Hole1.Tests
+namespace Hole2.Tests
 {
     public class TakeHomeCalculatorTest
     {
