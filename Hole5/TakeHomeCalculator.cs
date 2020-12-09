@@ -12,41 +12,48 @@ namespace Hole5
             this.percent = percent;
         }
 
-        public Pair<int, String> NetAmount(Pair<int, String> first, params Pair<int, String>[] rest) {
+        public Money NetAmount(Money first, params Money[] rest) {
 
-            List<Pair<int, String>> pairs = rest.ToList();
+            List<Money> monies = rest.ToList();
 
-            Pair<int, String> total = first;
+            Money total = first;
 
-            foreach (Pair<int, String> next in pairs) {
-                if (next.second != total.second) {
-                    throw new Incalculable();
-                }
+            foreach (Money next in monies) {
+                total = total.Plus(next);
             }
 
-            foreach (Pair<int, String> next in pairs) {
-                total = new Pair<int, String>(total.first + next.first, next.second);
-            }
+            Double amount = total.value * (percent / 100d);
+            Money tax = Money.Create(Convert.ToInt32(amount), first.currency);
 
-            Double amount = total.first * (percent / 100d);
-            Pair<int, String> tax = new Pair<int, String>(Convert.ToInt32(amount), first.second);
-
-            if (total.second == tax.second) {
-                return new Pair<int, String>(total.first - tax.first, first.second);
-            } else {
-                throw new Incalculable();
-            }
+            return total.Minus(tax);
         }
 
-        public class Pair<A, B> {
-            public readonly A first;
-            public readonly B second;
+        public class Money {
+            public readonly int value;
+            public readonly String currency;
 
-            public Pair(A first, B second) {
-                this.first = first;
-                this.second = second;
+            private Money(int value, String currency) {
+                this.value = value;
+                this.currency = currency;
+            }
+            
+            public static Money Create(int value, String currency) {
+                return new Money(value, currency);
             }
 
+            public Money Plus(Money other) {
+                if (!other.currency.Equals(currency)) {
+                    throw new Incalculable();
+                }
+                return Create(value + other.value, other.currency);
+            }
+            
+            public Money Minus(Money other) {
+                if (!currency.Equals(other.currency)) {
+                    throw new Incalculable();
+                }
+                return Create(value - other.value, currency);
+            }
         }
     }
     
