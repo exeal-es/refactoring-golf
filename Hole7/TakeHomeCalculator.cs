@@ -1,52 +1,69 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Hole7
 {
     public class TakeHomeCalculator {
 
-        private readonly int percent;
+        private readonly TaxRate taxRate;
 
-        public TakeHomeCalculator(int percent) {
-            this.percent = percent;
+        public TakeHomeCalculator(TaxRate taxRate) {
+            this.taxRate = taxRate;
         }
 
-        public Pair<int, String> NetAmount(Pair<int, String> first, params Pair<int, String>[] rest) {
+        public Money NetAmount(Money first, params Money[] rest) {
+            Money total = rest.Aggregate(first, (money, x) => money.Plus(x));
+            Money tax = taxRate.Apply(total);
+            return total.Minus(tax);
+        }
 
-            List<Pair<int, String>> pairs = rest.ToList();
+        public class Money {
+            public readonly int value;
+            public readonly String currency;
 
-            Pair<int, String> total = first;
+            private Money(int value, String currency) {
+                this.value = value;
+                this.currency = currency;
+            }
+            
+            public static Money Create(int value, String currency) {
+                return new Money(value, currency);
+            }
 
-            foreach (Pair<int, String> next in pairs) {
-                if (next.second != total.second) {
+            public Money Plus(Money other) {
+                if (!other.currency.Equals(currency)) {
                     throw new Incalculable();
                 }
+                return Create(value + other.value, other.currency);
             }
-
-            foreach (Pair<int, String> next in pairs) {
-                total = new Pair<int, String>(total.first + next.first, next.second);
-            }
-
-            Double amount = total.first * (percent / 100d);
-            Pair<int, String> tax = new Pair<int, String>(Convert.ToInt32(amount), first.second);
-
-            if (total.second == tax.second) {
-                return new Pair<int, String>(total.first - tax.first, first.second);
-            } else {
-                throw new Incalculable();
+            
+            public Money Minus(Money other) {
+                if (!currency.Equals(other.currency)) {
+                    throw new Incalculable();
+                }
+                return Create(value - other.value, currency);
             }
         }
+        
+        public class TaxRate {
+            private readonly int percent;
 
-        public class Pair<A, B> {
-            public readonly A first;
-            public readonly B second;
-
-            public Pair(A first, B second) {
-                this.first = first;
-                this.second = second;
+            private TaxRate(int percent) {
+                this.percent = percent;
             }
 
+            public static TaxRate Of(int percent) {
+                return new TaxRate(percent);
+            }
+
+            public int GetPercent() {
+                return percent;
+            }
+
+            public Money Apply(Money total) {
+                Double amount = total.value * (GetPercent() / 100d);
+                return Money.Create(Convert.ToInt32(amount), total.currency);
+            }
         }
     }
     
