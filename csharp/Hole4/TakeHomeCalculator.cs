@@ -25,8 +25,7 @@ namespace Hole4
             }
 
             Double amount = total.value * (percent / 100d);
-            var firstCurrency = first.currency;
-            Money tax = Money.Create(amount, firstCurrency);
+            Money tax = Money.Create(amount, first.currency);
 
             return total.Minus(tax);
         }
