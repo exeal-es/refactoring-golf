@@ -16,8 +16,7 @@ namespace Hole5
         public Money Apply(Money first, Money total)
         {
             Double amount = total.value * (_percent / 100d);
-            Money tax = Money.Create(Convert.ToInt32(amount), first.currency);
-            return tax;
+            return Money.Create(Convert.ToInt32(amount), first.currency);
         }
     }
 
