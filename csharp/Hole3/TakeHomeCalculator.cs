@@ -21,7 +21,7 @@ namespace Hole3
 
             foreach (Money next in monies)
             {
-                total = Money.Plus(next, total);
+                total = total.Plus(next);
             }
 
             Double amount = total.value * (percent / 100d);
