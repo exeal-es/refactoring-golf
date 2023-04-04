@@ -5,7 +5,7 @@
         public readonly A first;
         public readonly B second;
 
-        public Pair(A first, B second)
+        public Pair(int first, string second)
         {
             this.first = first;
             this.second = second;
