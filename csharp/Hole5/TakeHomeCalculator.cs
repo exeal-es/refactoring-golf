@@ -4,13 +4,23 @@ using System.Linq;
 
 namespace Hole5
 {
+    public class TaxRate
+    {
+        public TaxRate(int percent)
+        {
+            Percent = percent;
+        }
+
+        public int Percent { get; private set; }
+    }
+
     public class TakeHomeCalculator
     {
-        private readonly int percent;
+        private readonly TaxRate taxRate;
 
-        public TakeHomeCalculator(int percent)
+        public TakeHomeCalculator(TaxRate taxRate)
         {
-            this.percent = percent;
+            this.taxRate = taxRate;
         }
 
         public Money NetAmount(Money first, params Money[] rest)
@@ -24,7 +34,7 @@ namespace Hole5
                 total = total.Plus(next);
             }
 
-            Double amount = total.value * (percent / 100d);
+            Double amount = total.value * (taxRate / 100d);
             Money tax = Money.Create(Convert.ToInt32(amount), first.currency);
 
             return total.Minus(tax);
