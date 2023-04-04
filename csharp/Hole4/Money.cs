@@ -23,15 +23,15 @@ namespace Hole4
             return new Money(value + other.value, other.currency);
         }
 
-        public static Money Minus(Money total, Money tax)
+        public Money Minus(Money tax)
         {
             string firstCurrency;
-            if (!total.currency.Equals(tax.currency))
+            if (!currency.Equals(tax.currency))
             {
                 throw new Incalculable();
             }
 
-            return new Money(total.value - tax.value, currency);
+            return new Money(value - tax.value, currency);
         }
 
         public static Money Create(double amount, string currency)

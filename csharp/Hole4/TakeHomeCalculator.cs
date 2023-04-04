@@ -28,7 +28,7 @@ namespace Hole4
             var firstCurrency = first.currency;
             Money tax = Money.Create(amount, firstCurrency);
 
-            return Money.Minus(total, tax);
+            return total.Minus(tax);
         }
     }
 }
