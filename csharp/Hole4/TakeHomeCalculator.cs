@@ -28,6 +28,12 @@ namespace Hole4
             var firstCurrency = first.currency;
             Money tax = Create(amount, firstCurrency);
 
+            return Minus(total, tax);
+        }
+
+        private static Money Minus(Money total, Money tax)
+        {
+            string firstCurrency;
             if (!total.currency.Equals(tax.currency))
             {
                 throw new Incalculable();
