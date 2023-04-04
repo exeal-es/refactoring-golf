@@ -2,13 +2,13 @@
 {
     public class Pair
     {
-        public readonly int first;
-        public readonly string second;
+        public readonly int value;
+        public readonly string currency;
 
-        public Pair(int first, string second)
+        public Pair(int value, string currency)
         {
-            this.first = first;
-            this.second = second;
+            this.value = value;
+            this.currency = currency;
         }
     }
 }
