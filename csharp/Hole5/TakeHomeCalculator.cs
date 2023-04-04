@@ -8,10 +8,17 @@ namespace Hole5
     {
         public TaxRate(int percent)
         {
-            Percent = percent;
+            _percent = percent;
         }
 
-        public int Percent { get; private set; }
+        private readonly int _percent;
+
+        public Money Apply(Money first, Money total)
+        {
+            Double amount = total.value * (_percent / 100d);
+            Money tax = Money.Create(Convert.ToInt32(amount), first.currency);
+            return tax;
+        }
     }
 
     public class TakeHomeCalculator
@@ -34,16 +41,9 @@ namespace Hole5
                 total = total.Plus(next);
             }
 
-            var tax = Apply(taxRate, first, total);
+            var tax = taxRate.Apply(first, total);
 
             return total.Minus(tax);
-        }
-
-        private static Money Apply(TaxRate taxRate1, Money first, Money total)
-        {
-            Double amount = total.value * (taxRate1 / 100d);
-            Money tax = Money.Create(Convert.ToInt32(amount), first.currency);
-            return tax;
         }
     }
 }
