@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 
 namespace Hole2.Tests
@@ -8,9 +7,9 @@ namespace Hole2.Tests
         [Fact]
         public void CanCalculateTax()
         {
-            int first = new TakeHomeCalculator(10).NetAmount(new Pair<int, String>(40, "GBP"),
-                new Pair<int, String>(50, "GBP"),
-                new Pair<int, String>(60, "GBP")).first;
+            int first = new TakeHomeCalculator(10).NetAmount(new Pair<string>(40, "GBP"),
+                new Pair<string>(50, "GBP"),
+                new Pair<string>(60, "GBP")).first;
             Assert.Equal(135, first);
         }
 
@@ -18,7 +17,7 @@ namespace Hole2.Tests
         public void CannotSumDifferentCurrencies()
         {
             Assert.Throws<Incalculable>(() => new TakeHomeCalculator(10).NetAmount(new
-                Pair<int, String>(4, "GBP"), new Pair<int, String>(5, "USD")));
+                Pair<string>(4, "GBP"), new Pair<string>(5, "USD")));
         }
     }
 }
