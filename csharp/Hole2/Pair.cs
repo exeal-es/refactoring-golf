@@ -3,7 +3,7 @@
     public class Pair<A, B>
     {
         public readonly int first;
-        public readonly B second;
+        public readonly string second;
 
         public Pair(int first, string second)
         {
