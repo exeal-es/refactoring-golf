@@ -14,11 +14,9 @@ namespace Hole6
 
         public Money NetAmount(Money first, params Money[] rest)
         {
-            List<Money> monies = rest.ToList();
-
             Money total = first;
 
-            foreach (Money next in monies)
+            foreach (Money next in rest.ToList())
             {
                 total = total.Plus(next);
             }
