@@ -21,7 +21,7 @@ namespace Hole1
 
             foreach (Pair<int, String> next in pairs)
             {
-                if (next.second != total.second)
+                if (!next.second.Equals(total.second))
                 {
                     throw new Incalculable();
                 }
