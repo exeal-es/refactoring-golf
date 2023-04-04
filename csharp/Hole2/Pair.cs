@@ -2,7 +2,7 @@
 {
     public class Pair<A, B>
     {
-        public readonly A first;
+        public readonly int first;
         public readonly B second;
 
         public Pair(int first, string second)
