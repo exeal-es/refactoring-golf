@@ -7,9 +7,9 @@ namespace Hole2.Tests
         [Fact]
         public void CanCalculateTax()
         {
-            int first = new TakeHomeCalculator(10).NetAmount(new Pair<string>(40, "GBP"),
-                new Pair<string>(50, "GBP"),
-                new Pair<string>(60, "GBP")).first;
+            int first = new TakeHomeCalculator(10).NetAmount(new Pair(40, "GBP"),
+                new Pair(50, "GBP"),
+                new Pair(60, "GBP")).first;
             Assert.Equal(135, first);
         }
 
@@ -17,7 +17,7 @@ namespace Hole2.Tests
         public void CannotSumDifferentCurrencies()
         {
             Assert.Throws<Incalculable>(() => new TakeHomeCalculator(10).NetAmount(new
-                Pair<string>(4, "GBP"), new Pair<string>(5, "USD")));
+                Pair(4, "GBP"), new Pair(5, "USD")));
         }
     }
 }

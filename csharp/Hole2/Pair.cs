@@ -1,6 +1,6 @@
 ﻿namespace Hole2
 {
-    public class Pair<B>
+    public class Pair
     {
         public readonly int first;
         public readonly string second;
